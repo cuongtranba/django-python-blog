@@ -1,0 +1,6 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "python.pythonPath": "C:/Users/12410_000/Anaconda3/python",
+    "python.formatting.provider": "autopep8",
+    "python.linting.pylintEnabled":false
+}
