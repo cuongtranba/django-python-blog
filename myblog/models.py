@@ -28,7 +28,7 @@ class Category(BaseModel):
 class Post(BaseModel):
     title = models.CharField(max_length=200)
     content = models.TextField()
-
+    
     pub_date = models.DateTimeField()
     user = models.ForeignKey(User,null=True)
 

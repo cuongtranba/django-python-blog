@@ -16,7 +16,7 @@
 	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
 	<!-- Custom CSS -->
-	<link href="css/blog-home.css" rel="stylesheet">
+	<link href="{% static 'css/blog-home.css' %}" rel="stylesheet">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,6 +55,15 @@
 						<a href="#">Contact</a>
 					</li>
 				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					{% if user.is_authenticated %}
+						<li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome {{ user.username }}</a></li>
+						<li><a href="{% url 'UserLogout' %}" data-toggle="modal"><span class="glyphicon glyphicon-log-out"></span> logoff</a></li>
+					{% else %}
+						<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+						<li><a href="#" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					{% endif %}
+				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
 		</div>
@@ -65,10 +74,7 @@
 	<div class="container">
 
 		<div class="row">
-            {% block content %}
-            
-            {% endblock content %}                
-            
+			{% block content %} {% endblock content %}
 		</div>
 		<!-- /.row -->
 
@@ -89,9 +95,27 @@
 	<!-- /.container -->
 
 	<!-- jQuery -->
-	<script src=" {% static " js/jquery.js "%}"></script>
+	<script src=" {% static 'js/jquery.js'%}"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src=" {% static " js/bootstrap.min.js "%}"></script>
+	<script src=" {% static 'js/bootstrap.min.js'%}"></script>
 </body>
+
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+		<div class="loginmodal-container">
+			<h1>Login to Your Account</h1><br>
+			<form action="{% url 'UserLogin' %}" method="POST">
+				{% csrf_token %}
+				<input type="text" name="username" placeholder="Username">
+				<input type="password" name="password" placeholder="Password">
+				<input type="submit" name="login" class="login loginmodal-submit" value="Login">
+			</form>
+
+			<div class="login-help">
+				<a href="#">Register</a> - <a href="#">Forgot Password</a>
+			</div>
+		</div>
+	</div>
+</div>
 
 </html>
