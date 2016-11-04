@@ -5,6 +5,7 @@ from .models import Category,Tag,Post
 from django.contrib.auth import authenticate, login,logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -21,8 +22,20 @@ def UserLogin(request):
         login(request, user)
         url=reverse("index")
         return HttpResponseRedirect(url)
+    else:
+        return HttpResponse('<h1>Error</h1>')    
   
 def UserLogout(request):
     logout(request)
     url=reverse("index")
     return HttpResponseRedirect(url)
+
+def UserRegister(request):
+    username=request.POST['username']
+    password=request.POST['password']
+    email=request.POST['email']
+    user = User.objects.create_user(username, email, password)
+    if user is not None:
+        url=reverse("index")
+        return HttpResponseRedirect(url)
+    return HttpResponse('<h1>Error</h1>')
