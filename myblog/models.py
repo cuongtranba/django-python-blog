@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -9,13 +10,6 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-
-
-class User(BaseModel):
-    name = models.CharField(max_length=20)
-
-    picture_url = models.CharField(max_length=200)
-
 
 class Tag(BaseModel):
     tag_name = models.CharField(max_length=20)

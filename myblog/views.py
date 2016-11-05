@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login,logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-
+import datetime
 
 def index(request):
     categories = Category.objects.all()
@@ -39,3 +39,16 @@ def UserRegister(request):
         url=reverse("index")
         return HttpResponseRedirect(url)
     return HttpResponse('<h1>Error</h1>')
+
+def CreatePost(request):
+    if request.method == 'GET':
+        return render(request,"post.html") 
+    else:
+        title=request.POST['title']
+        content=request.POST['content']
+        post=Post(title=title,content=content,user=request.user,pub_date=datetime.datetime.now())
+        post.save()
+        url=reverse("index")
+        return HttpResponseRedirect(url)
+    
+
